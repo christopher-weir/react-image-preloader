@@ -31,65 +31,65 @@ const ReactImagePreloader = React.createClass( {
         }, 20000 );
     },
 
-    loadHero() {
-
+    placeholderLoaded() {
         const _this = this;
-        const img = new Image();
 
-        const loaded = function() {
-            _this.setState( {
-                hero: _this.state.hero,
-                heroLoaded: true
-            } );
-            _this.forceUpdate();
+        _this.setState( {
+            placeholderShow: true
+        } );
 
-            setTimeout( function () {
-                _this.setState( {
-                    heroActive: true
-                } );
-                _this.postLoadCleanup();
-            }, 100 );
-        };
+        setTimeout( function () {
 
-        img.addEventListener( 'load', loaded, false );
-        img.src = _this.state.hero;
+            _this.loadImage( 'hero' );
+
+        }, 1000 );
     },
 
-    loadPlaceholder() {
+    heroLoaded() {
+
+        const _this = this;
+
+        _this.setState( {
+            hero: _this.state.hero,
+            heroLoaded: true
+        } );
+        _this.forceUpdate();
+
+        setTimeout( function () {
+            _this.setState( {
+                heroActive: true
+            } );
+            _this.postLoadCleanup();
+        }, 100 );
+    },
+
+    loadImage( _type ) {
 
         const _this = this;
         const img = new Image();
+        const src = ( _type === 'hero' ) ? _this.state.hero : _this.state.placeholder;
 
         const loaded = function() {
-            _this.setState( {
-                placeholderShow: true
-            } );
-            _this.forceUpdate();
 
-            setTimeout( function () {
-
-                _this.loadHero();
-
-            }, 1000 );
+            if( _type === 'hero' ) {
+                _this.heroLoaded();
+            }
+            else {
+                _this.placeholderLoaded();
+            }
         };
 
         img.addEventListener( 'load', loaded, false );
-        img.src = _this.state.placeholder;
+        img.src = src;
+
     },
 
     componentDidMount: function() {
         const _this = this;
+        const imageType = ( _this.state.placeholder ) ? 'placeholder' : 'hero';
 
         setTimeout( function () {
-
-            if( _this.state.placeholder ) {
-                _this.loadPlaceholder();
-            }
-            else {
-                _this.loadHero();
-            }
-
-
+            _this.loadImage( imageType );
         }, 1 );
 
     },
