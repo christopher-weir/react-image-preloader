@@ -1,0 +1,17 @@
+{
+  "name": "@illuns/react-image-preloader",
+  "version": "0.0.1",
+  "description": "react image preloader",
+  "author": "Christopher Weir <hello@illuns.com>",
+  "main": "index.js",
+  "keywords": [
+    "react",
+    "image",
+    "preloader"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/christopher-weir/react-image-preloader/issues"
+  },
+  "homepage": "https://github.com/christopher-weir/react-image-preloader#readme"
+}
