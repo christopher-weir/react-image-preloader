@@ -5,16 +5,15 @@ const ReactImagePreloader = React.createClass( {
 
     getInitialState() {
         return {
-            loaded: false,
 
             placeholder: this.props.placeholder || false,
-            showPlaceholder: false,
+            placeholderShow: false,
 
             hero: this.props.src,
             heroLoaded: false,
-            heroFade: false,
+            heroActive: false,
 
-            classes: this.props.classes,
+            classes: this.props.classes || '',
 
             src: '',
             alt: ''
@@ -27,7 +26,7 @@ const ReactImagePreloader = React.createClass( {
 
         setTimeout( function () {
             _this.setState( {
-                showPlaceholder: false
+                placeholderShow: false
             } );
         }, 20000 );
     },
@@ -46,7 +45,7 @@ const ReactImagePreloader = React.createClass( {
 
             setTimeout( function () {
                 _this.setState( {
-                    heroFade: true
+                    heroActive: true
                 } );
                 _this.postLoadCleanup();
             }, 100 );
@@ -63,7 +62,7 @@ const ReactImagePreloader = React.createClass( {
 
         const loaded = function() {
             _this.setState( {
-                showPlaceholder: true
+                placeholderShow: true
             } );
             _this.forceUpdate();
 
@@ -100,7 +99,7 @@ const ReactImagePreloader = React.createClass( {
         let placeholder = null;
         let hero = null;
 
-        if( this.state.showPlaceholder ) {
+        if( this.state.placeholderShow ) {
             placeholder = <img
                 className="placeholder"
                 style={{
@@ -114,7 +113,7 @@ const ReactImagePreloader = React.createClass( {
                 className={
                     classNames( {
                         'image': true,
-                        'active': this.state.heroFade
+                        'active': this.state.heroActive
                     } )
                 }
                 style={{
